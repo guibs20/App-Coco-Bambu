@@ -1,0 +1,56 @@
+package coco.bambu;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class main {
+	@Test
+	public void SenhasDiferentes() {
+		//Chamando o driver
+		WebDriver driver = new ChromeDriver();
+		//Chamada da url/endereço
+		driver.get("https://app.cocobambu.com/entrar");
+		//Maximizar tela
+		driver.manage().window().maximize();
+		//Interação com o elemento
+		driver.findElement(By.cssSelector(".ng-tns-c115-0:nth-child(1) > .link")).click();
+		//Pausa
+		WebDriverWait pause = new WebDriverWait(driver, 15);
+		pause.until(ExpectedConditions.elementToBeClickable(By.xpath("(//input[@name='password'])[2]")));
+		//Entrada de dados
+		driver.findElement(By.xpath("(//input[@name='password'])[2]")).sendKeys("Gbs@123");
+		driver.findElement(By.xpath("//input[@name='confirmPassword']")).sendKeys("123@Gbs");
+		//Asserção para verificar se o elemento é o esperado
+		Assert.assertEquals("As senhas inseridas são diferentes.", driver.findElement(By.cssSelector(".error-message")).getText());
+		//Fechar página
+		driver.close();
+	}
+	@Test
+	public void FazerCadastroComPrimeiroNome() {
+		//Chamando o driver
+		WebDriver driver = new ChromeDriver();
+		//Chamada da url
+		driver.get("https://app.cocobambu.com/entrar");
+		//Maximizar tela
+		driver.manage().window().maximize();
+		//Interação com o elemento
+		driver.findElement(By.cssSelector(".ng-tns-c115-0:nth-child(1) > .link")).click();
+		//Pausa
+		WebDriverWait pause = new WebDriverWait(driver , 15);
+		pause.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#name > .native-input")));
+		//Entrada de dados
+		driver.findElement(By.cssSelector("#name > .native-input")).sendKeys("Guilherme");
+		driver.findElement(By.cssSelector(".field:nth-child(3) > #username > .native-input")).click();
+		//Asserção para verificar se o elemento é o esperado
+		Assert.assertEquals("Digite seu nome completo.", driver.findElement(By.cssSelector(".validation-errors:nth-child(2) > .error-message")).getText());
+		//Fechar página
+		driver.close();
+		
+	}
+
+}
